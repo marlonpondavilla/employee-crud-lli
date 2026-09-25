@@ -161,13 +161,6 @@ const LoginPage: React.FC = () => {
                 </Button>
               </Form.Item>
             </Form>
-
-            <div style={{ textAlign: 'center', marginTop: 24 }}>
-              <Text type="secondary" style={{ fontSize: 12 }}>
-                Demo: <Text code>admin / password123</Text> ·{' '}
-                <Text code>employee / password123</Text>
-              </Text>
-            </div>
           </Card>
         </Col>
       </Row>
