@@ -6,30 +6,32 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AppLayout from './components/AppLayout';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import EmployeesPage from './pages/EmployeePage';
+
 
 const App: React.FC = () => {
   return (
     <ConfigProvider
-  theme={{
-    algorithm: theme.defaultAlgorithm,
-    token: {
-      colorPrimary: '#389e0d',
-      colorInfo: '#389e0d',
-      colorSuccess: '#52c41a',
-      colorLink: '#389e0d',
-      borderRadius: 8,
-      fontFamily:
-        "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-    },
-    components: {
-      Menu: {
-        darkItemBg: '#001529',
-        darkItemSelectedBg: '#389e0d',
-        darkItemHoverBg: 'rgba(56, 158, 13, 0.18)',
-      },
-    },
-  }}
->
+        theme={{
+          algorithm: theme.defaultAlgorithm,
+          token: {
+            colorPrimary: '#389e0d',
+            colorInfo: '#389e0d',
+            colorSuccess: '#52c41a',
+            colorLink: '#389e0d',
+            borderRadius: 8,
+            fontFamily:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+          },
+          components: {
+            Menu: {
+              darkItemBg: '#001529',
+              darkItemSelectedBg: '#389e0d',
+              darkItemHoverBg: 'rgba(56, 158, 13, 0.18)',
+            },
+          },
+        }}
+      >
       <BrowserRouter>
         <AuthProvider>
           <Routes>
@@ -42,6 +44,7 @@ const App: React.FC = () => {
               }
             >
               <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/employees" element={<EmployeesPage />} />
             </Route>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
