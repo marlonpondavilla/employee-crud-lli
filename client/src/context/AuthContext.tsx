@@ -1,16 +1,8 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import type { AuthUser } from '../types/auth';
 import { loginRequest, meRequest } from '../services/auth.service';
 import { TOKEN_STORAGE_KEY } from '../api/axios';
-
-interface AuthContextValue {
-  user: AuthUser | null;
-  loading: boolean;
-  login: (username: string, password: string) => Promise<AuthUser>;
-  logout: () => void;
-}
-
-const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+import { AuthContext } from './auth-context';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -52,10 +44,4 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used within AuthProvider');
-  return ctx;
 };

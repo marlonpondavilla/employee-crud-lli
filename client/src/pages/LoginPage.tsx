@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Card, Form, Input, Typography, message } from 'antd';
+import { isAxiosError } from 'axios';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 
 const { Title, Text } = Typography;
 
@@ -28,8 +29,11 @@ const LoginPage: React.FC = () => {
       await login(values.username, values.password);
       message.success('Login successful');
       navigate(from, { replace: true });
-    } catch (err: any) {
-      message.error(err?.response?.data?.message || 'Login failed');
+    } catch (err: unknown) {
+      const errorMessage = isAxiosError<{ message?: string }>(err)
+        ? err.response?.data?.message
+        : undefined;
+      message.error(errorMessage || 'Login failed');
     } finally {
       setLoading(false);
     }
