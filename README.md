@@ -1,6 +1,6 @@
 # Employee CRUD System
 
-A Full-Stack Employee Management Application for Presentation to the MIS @ LLI (Built with React, Ant Design, Express, TypeScript, JWT, and Microsoft SQL Server)
+A Full-Stack Employee Management Application for submission to the MIS @ LLI (Built with React, Ant Design, Express, TypeScript, JWT, and Microsoft SQL Server)
 
 ## Prerequisites
 
