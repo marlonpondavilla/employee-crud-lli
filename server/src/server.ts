@@ -3,6 +3,10 @@ import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 
+import { testConnection } from './config/db';
+import authRoutes from './routes/auth.routes';
+import { errorHandler, notFound } from './middlewares/error.middleware';
+
 dotenv.config();
 
 const app = express();
@@ -12,9 +16,19 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+app.get('/api/health', async (_req, res) => {
+  const dbOk = await testConnection();
+  res.json({
+    status: 'ok',
+    db: dbOk ? 'connected' : 'disconnected',
+    timestamp: new Date().toISOString(),
+  });
 });
+
+app.use('/api/auth', authRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
