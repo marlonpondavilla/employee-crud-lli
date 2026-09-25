@@ -26,7 +26,8 @@ const DashboardPage: React.FC = () => {
     const loadEmployees = async () => {
       setLoading(true);
       try {
-        setEmployees(await employeesRequest());
+        const response = await employeesRequest({ page: 1, pageSize: 1000 });
+        setEmployees(response.employees);
         setError(null);
       } catch {
         setError('Unable to load administrator metrics.');

@@ -10,3 +10,5 @@ export interface Employee {
   hireDate: string;
   status: string;
 }
+
+export type EmployeeInput = Omit<Employee, 'id'>;
