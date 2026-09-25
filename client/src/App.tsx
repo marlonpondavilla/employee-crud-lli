@@ -7,6 +7,7 @@ import AppLayout from './components/AppLayout';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import EmployeesPage from './pages/EmployeePage';
+import ProfilePage from './pages/ProfilePage';
 
 
 const App: React.FC = () => {
@@ -45,6 +46,7 @@ const App: React.FC = () => {
             >
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/employees" element={<EmployeesPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
             </Route>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />

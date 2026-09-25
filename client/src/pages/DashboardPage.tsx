@@ -5,7 +5,9 @@ import {
   CheckCircleOutlined,
   DollarOutlined,
   TeamOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import { employeesRequest } from '../services/employee.service';
 import type { Employee } from '../types/employee';
@@ -118,6 +120,47 @@ const DashboardPage: React.FC = () => {
             </Col>
           </Row>
         </>
+      )}
+
+      {user?.role !== 'Admin' && (
+        <Row gutter={[16, 16]}>
+          <Col xs={24} sm={12} xl={8}>
+            <Card>
+              <Statistic
+                title="Account Status"
+                value="Active"
+                prefix={<CheckCircleOutlined />}
+                valueStyle={{ color: '#389e0d' }}
+              />
+            </Card>
+          </Col>
+          <Col xs={24} sm={12} xl={8}>
+            <Card>
+              <Statistic
+                title="Access Level"
+                value="Employee"
+                prefix={<UserOutlined />}
+                valueStyle={{ color: '#1677ff' }}
+              />
+            </Card>
+          </Col>
+          <Col xs={24} sm={24} xl={8}>
+            <Card>
+              <Statistic title="Username" value={user?.username} prefix={<UserOutlined />} />
+            </Card>
+          </Col>
+          <Col span={24}>
+            <Card
+              title="My Profile"
+              extra={<Link to="/profile">View profile</Link>}
+            >
+              <Paragraph type="secondary" style={{ marginBottom: 0 }}>
+                Review your account details, role, and profile information from the My Profile
+                page.
+              </Paragraph>
+            </Card>
+          </Col>
+        </Row>
       )}
     </>
   );

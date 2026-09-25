@@ -34,6 +34,7 @@ const AppLayout: React.FC = () => {
         { key: '/dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
         { key: '/employees', icon: <TeamOutlined />, label: 'Employees' },
         { key: '/reports', icon: <FileTextOutlined />, label: 'Reports' },
+        { key: '/profile', icon: <UserOutlined />, label: 'My Profile' },
       ]
     : [
         { key: '/dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },

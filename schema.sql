@@ -42,14 +42,14 @@ IF NOT EXISTS (SELECT 1 FROM Users WHERE Username = 'admin')
     INSERT INTO Users (Username, PasswordHash, FullName, Role)
     VALUES ('admin',
             '$2b$10$C/VKmwiSZH4CQEEwLE3N4eoJYkGylpP0I73LE97R5RRntClY1vzfu',
-            'System Administrator', 'Admin');
+            'Test Admin', 'Admin');
 GO
 
 IF NOT EXISTS (SELECT 1 FROM Users WHERE Username = 'employee')
     INSERT INTO Users (Username, PasswordHash, FullName, Role)
     VALUES ('employee',
             '$2b$10$C/VKmwiSZH4CQEEwLE3N4eoJYkGylpP0I73LE97R5RRntClY1vzfu',
-            'Regular Employee', 'User');
+            'Test Employee', 'User');
 GO
 
 IF NOT EXISTS (SELECT 1 FROM Employees WHERE EmployeeCode = 'EMP001')
