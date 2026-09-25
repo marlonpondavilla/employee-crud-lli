@@ -52,6 +52,7 @@ const LoginPage: React.FC = () => {
       <Row style={{ flex: 1, margin: 0 }}>
         {/* Left panel — illustration */}
         <Col
+          className="login-illustration-panel"
           xs={0}
           md={12}
           lg={14}

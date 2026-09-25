@@ -274,23 +274,14 @@ const EmployeesPage: React.FC = () => {
 
   return (
     <Card>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: 16,
-          flexWrap: 'wrap',
-          gap: 12,
-        }}
-      >
+      <div className="employee-toolbar" style={{ marginBottom: 16 }}>
         <div>
           <Title level={4} style={{ margin: 0 }}>
             Employees
           </Title>
           <Text type="secondary">Create, edit, and manage employee records</Text>
         </div>
-        <Space>
+        <Space className="employee-actions">
           <Input
             placeholder="Search employees"
             prefix={<SearchOutlined />}
@@ -310,24 +301,28 @@ const EmployeesPage: React.FC = () => {
 
       {error && <Alert type="error" showIcon message={error} style={{ marginBottom: 16 }} />}
 
-      <Table<Employee>
-        rowKey="id"
-        columns={columns}
-        dataSource={employees}
-        loading={loading}
-        onChange={handleTableChange}
-        pagination={{
-          current: page,
-          pageSize,
-          total,
-          showSizeChanger: true,
-          pageSizeOptions: [10, 20, 30, 50],
-          showTotal: (count) => `${count} employees`,
-        }}
-        scroll={{ x: 1450 }}
-      />
+      <div className="employee-table-scroll">
+        <Table<Employee>
+          className="employee-table"
+          rowKey="id"
+          columns={columns}
+          dataSource={employees}
+          loading={loading}
+          onChange={handleTableChange}
+          pagination={{
+            current: page,
+            pageSize,
+            total,
+            showSizeChanger: true,
+            pageSizeOptions: [10, 20, 30, 50],
+            showTotal: (count) => `${count} employees`,
+          }}
+          scroll={{ x: 1450 }}
+        />
+      </div>
 
       <Modal
+        className="employee-modal"
         title={editingEmployee ? 'Edit Employee' : 'Add Employee'}
         open={modalOpen}
         onCancel={closeModal}
@@ -343,7 +338,7 @@ const EmployeesPage: React.FC = () => {
           onFinish={handleSubmit}
           style={{ marginTop: 20 }}
         >
-          <Space style={{ display: 'flex' }} size="middle" align="start">
+          <Space className="employee-form-row" size="middle" align="start">
             <Form.Item
               label="Employee Code"
               name="employeeCode"
@@ -362,7 +357,7 @@ const EmployeesPage: React.FC = () => {
             </Form.Item>
           </Space>
 
-          <Space style={{ display: 'flex' }} size="middle" align="start">
+          <Space className="employee-form-row" size="middle" align="start">
             <Form.Item
               label="First Name"
               name="firstName"
@@ -389,7 +384,7 @@ const EmployeesPage: React.FC = () => {
             <Input />
           </Form.Item>
 
-          <Space style={{ display: 'flex' }} size="middle" align="start">
+          <Space className="employee-form-row" size="middle" align="start">
             <Form.Item
               label="Department"
               name="department"
@@ -408,7 +403,7 @@ const EmployeesPage: React.FC = () => {
             </Form.Item>
           </Space>
 
-          <Space style={{ display: 'flex' }} size="middle" align="start">
+          <Space className="employee-form-row" size="middle" align="start">
             <Form.Item
               label="Salary"
               name="salary"

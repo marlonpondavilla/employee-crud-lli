@@ -185,15 +185,7 @@ const ReportsPage: React.FC = () => {
   return (
     <>
       <Card style={{ marginBottom: 24 }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: 16,
-            flexWrap: 'wrap',
-          }}
-        >
+        <div className="reports-toolbar">
           <div>
             <Title level={4} style={{ margin: 0 }}>
               Employee Reports

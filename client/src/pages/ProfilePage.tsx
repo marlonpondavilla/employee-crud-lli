@@ -10,7 +10,7 @@ const ProfilePage: React.FC = () => {
 
   return (
     <Card>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 28 }}>
+      <div className="profile-header">
         <Avatar size={64} style={{ background: '#389e0d' }} icon={<UserOutlined />} />
         <div>
           <Title level={3} style={{ margin: 0 }}>

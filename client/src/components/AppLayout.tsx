@@ -129,12 +129,12 @@ const AppLayout: React.FC = () => {
 
       <Layout>
         <Header
+          className="app-header"
           style={{
             background: colorBgContainer,
             display: 'flex',
             justifyContent: 'flex-end',
             alignItems: 'center',
-            paddingRight: 24,
             borderBottom: '1px solid #f0f0f0',
           }}
         >
@@ -164,7 +164,7 @@ const AppLayout: React.FC = () => {
             </span>
           </Dropdown>
         </Header>
-        <Content style={{ margin: 24 }}>
+        <Content className="app-content">
           <Outlet />
         </Content>
       </Layout>
