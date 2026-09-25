@@ -1,0 +1,153 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.app-content {
+  margin: 24px;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.app-header {
+  padding: 0 24px;
+}
+
+.employee-toolbar,
+.reports-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.employee-actions {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.employee-form-row {
+  display: flex;
+  width: 100%;
+}
+
+.employee-form-row > .ant-form-item {
+  min-width: 0;
+}
+
+.employee-modal .ant-modal-content {
+  max-width: calc(100vw - 24px);
+}
+
+.employee-table-scroll {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.employee-table {
+  width: 100%;
+}
+
+.employee-table-scroll .ant-table-wrapper {
+  min-width: 0;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 767px) {
+  .login-illustration-panel {
+    display: none !important;
+  }
+
+  .app-content {
+    margin: 16px;
+  }
+
+  .app-header {
+    padding: 0 16px;
+  }
+
+  .employee-toolbar,
+  .reports-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .employee-actions {
+    width: 100%;
+  }
+
+  .employee-actions .ant-input-affix-wrapper,
+  .employee-actions .ant-input {
+    flex: 1;
+    min-width: 0;
+    width: 100% !important;
+  }
+
+  .employee-actions .ant-btn {
+    flex: 1;
+  }
+
+  .employee-form-row {
+    flex-direction: column;
+    gap: 0 !important;
+  }
+
+  .employee-form-row > .ant-form-item {
+    width: 100% !important;
+  }
+
+  .profile-header {
+    align-items: flex-start;
+  }
+
+  .employee-table-scroll .ant-table-content,
+  .employee-table-scroll .ant-table-body {
+    overflow-x: auto !important;
+  }
+}
+
+@media (max-width: 479px) {
+  .app-content {
+    margin: 12px;
+  }
+
+  .app-header {
+    padding: 0 12px;
+  }
+
+  .app-header .ant-typography {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .profile-header {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+}
