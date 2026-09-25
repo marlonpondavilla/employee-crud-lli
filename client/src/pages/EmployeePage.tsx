@@ -1,136 +1,92 @@
-import React, { useMemo, useState } from 'react';
-import {
-  Button,
-  Card,
-  Dropdown,
-  Input,
-  Space,
-  Table,
-  Tag,
-  Typography,
-  message,
-} from 'antd';
-import {
-  DeleteOutlined,
-  DownloadOutlined,
-  EditOutlined,
-  FileExcelOutlined,
-  FileTextOutlined,
-  PlusOutlined,
-  SearchOutlined,
-} from '@ant-design/icons';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Alert, Card, Input, Space, Table, Tag, Typography } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
+import { employeesRequest } from '../services/employee.service';
 import type { Employee } from '../types/employee';
 
 const { Title, Text } = Typography;
 
-// MOCK DATA — will be replaced with a real API call in Phase 4.
-const MOCK_EMPLOYEES: Employee[] = [
-  {
-    id: 1,
-    employeeCode: 'EMP001',
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    department: 'IT',
-    position: 'Software Engineer',
-    salary: 75000,
-    hireDate: '2023-01-15',
-    status: 'Active',
-  },
-  {
-    id: 2,
-    employeeCode: 'EMP002',
-    firstName: 'Jane',
-    lastName: 'Smith',
-    email: 'jane.smith@example.com',
-    department: 'HR',
-    position: 'HR Manager',
-    salary: 65000,
-    hireDate: '2022-05-20',
-    status: 'Active',
-  },
-  {
-    id: 3,
-    employeeCode: 'EMP003',
-    firstName: 'Robert',
-    lastName: 'Johnson',
-    email: 'robert.j@example.com',
-    department: 'Finance',
-    position: 'Financial Analyst',
-    salary: 70000,
-    hireDate: '2021-11-01',
-    status: 'Active',
-  },
-];
+const formatDate = (value: string) => {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString();
+};
 
-const formatCurrency = (n: number) =>
-  new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(n);
+const formatCurrency = (value: number) =>
+  new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(value);
 
 const EmployeesPage: React.FC = () => {
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    if (!q) return MOCK_EMPLOYEES;
-    return MOCK_EMPLOYEES.filter(
-      (e) =>
-        e.employeeCode.toLowerCase().includes(q) ||
-        e.firstName.toLowerCase().includes(q) ||
-        e.lastName.toLowerCase().includes(q) ||
-        e.email.toLowerCase().includes(q)
+  useEffect(() => {
+    const loadEmployees = async () => {
+      try {
+        setError(null);
+        setEmployees(await employeesRequest());
+      } catch {
+        setError('Unable to load employees. Please check the server connection.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadEmployees();
+  }, []);
+
+  const filteredEmployees = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    if (!query) return employees;
+
+    return employees.filter((employee) =>
+      [
+        employee.id,
+        employee.employeeCode,
+        employee.firstName,
+        employee.lastName,
+        employee.email,
+        employee.department,
+        employee.position,
+        employee.salary,
+        employee.hireDate,
+        employee.status,
+      ].some((value) => String(value ?? '').toLowerCase().includes(query))
     );
-  }, [search]);
-
-  const notImplemented = (feature: string) =>
-    message.info(`${feature} — coming in a later phase`);
+  }, [employees, search]);
 
   const columns: ColumnsType<Employee> = [
-    { title: 'Code', dataIndex: 'employeeCode', key: 'employeeCode', width: 110 },
     {
-      title: 'Name',
-      key: 'name',
-      render: (_, r) => `${r.firstName} ${r.lastName}`,
+      title: 'Code',
+      dataIndex: 'employeeCode',
+      key: 'employeeCode',
+      width: 110,
     },
-    { title: 'Email', dataIndex: 'email', key: 'email' },
-    { title: 'Department', dataIndex: 'department', key: 'department', width: 130 },
+    { title: 'FirstName', dataIndex: 'firstName', key: 'firstName' },
+    { title: 'LastName', dataIndex: 'lastName', key: 'lastName' },
+    { title: 'Email', dataIndex: 'email', key: 'email', width: 240 },
+    { title: 'Department', dataIndex: 'department', key: 'department' },
     { title: 'Position', dataIndex: 'position', key: 'position' },
     {
       title: 'Salary',
       dataIndex: 'salary',
       key: 'salary',
       align: 'right',
-      width: 140,
-      render: (v: number) => formatCurrency(v),
+      render: (value: number) => formatCurrency(value),
+    },
+    {
+      title: 'HireDate',
+      dataIndex: 'hireDate',
+      key: 'hireDate',
+      render: (value: string) => formatDate(value),
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 100,
-      render: (s: string) => (
-        <Tag color={s === 'Active' ? 'green' : 'default'}>{s}</Tag>
-      ),
-    },
-    {
-      title: 'Actions',
-      key: 'actions',
-      width: 120,
-      align: 'center',
-      render: () => (
-        <Space>
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => notImplemented('Edit employee')}
-          />
-          <Button
-            type="text"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => notImplemented('Delete employee')}
-          />
-        </Space>
+      render: (value: string) => (
+        <Tag color={value === 'Active' ? 'green' : 'default'}>{value}</Tag>
       ),
     },
   ];
@@ -151,56 +107,29 @@ const EmployeesPage: React.FC = () => {
           <Title level={4} style={{ margin: 0 }}>
             Employees
           </Title>
-          <Text type="secondary">Manage your workforce records</Text>
+          <Text type="secondary">Administrator view of employee records</Text>
         </div>
-
-        <Space wrap>
+        <Space>
           <Input
-            placeholder="Search name, code, or email"
+            placeholder="Search employees"
             prefix={<SearchOutlined />}
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(event) => setSearch(event.target.value)}
             allowClear
             style={{ width: 260 }}
           />
-
-          <Dropdown
-            menu={{
-              items: [
-                {
-                  key: 'csv',
-                  icon: <FileTextOutlined />,
-                  label: 'Download as CSV',
-                  onClick: () => notImplemented('CSV export'),
-                },
-                {
-                  key: 'excel',
-                  icon: <FileExcelOutlined />,
-                  label: 'Download as Excel',
-                  onClick: () => notImplemented('Excel export'),
-                },
-              ],
-            }}
-          >
-            <Button icon={<DownloadOutlined />}>Generate Report</Button>
-          </Dropdown>
-
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={() => notImplemented('Add employee')}
-          >
-            Add Employee
-          </Button>
         </Space>
       </div>
+
+      {error && <Alert type="error" showIcon message={error} style={{ marginBottom: 16 }} />}
 
       <Table<Employee>
         rowKey="id"
         columns={columns}
-        dataSource={filtered}
+        dataSource={filteredEmployees}
+        loading={loading}
         pagination={{ pageSize: 8, showSizeChanger: false }}
-        scroll={{ x: 900 }}
+        scroll={{ x: 1250 }}
       />
     </Card>
   );

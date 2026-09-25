@@ -8,5 +8,5 @@ export interface Employee {
   position: string;
   salary: number;
   hireDate: string;
-  status: 'Active' | 'Inactive' | string;
+  status: string;
 }
