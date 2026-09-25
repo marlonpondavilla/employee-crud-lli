@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 
 import { testConnection } from './config/db';
 import authRoutes from './routes/auth.routes';
+import employeeRoutes from './routes/employees.routes';
 import { errorHandler, notFound } from './middlewares/error.middleware';
 
 dotenv.config();
@@ -26,6 +27,7 @@ app.get('/api/health', async (_req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/employees', employeeRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
