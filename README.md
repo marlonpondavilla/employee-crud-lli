@@ -33,8 +33,8 @@ Default accounts:
 
 | Username   | Password      | Role          |
 | ---------- | ------------- | ------------- |
-| `admin`    | `password123` | Administrator |
-| `employee` | `password123` | Employee      |
+| `admin`    | `password123` | Admin         |
+| `employee` | `password123` | User          |
 
 ## 3. Install and configure the server
 
